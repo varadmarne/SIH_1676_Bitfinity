@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        VulnScout
+    </title>
+</head>
+<style>
+    @font-face {
+        
+        font-family: Azonix;
+        src: url(Azonix-1VB0.otf) ;
+    }
+    body, html {
+        margin: 0;
+        height: 100%;
+        overflow-x: hidden;
+        font-family: 'Roboto', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    }
+    body{
+
+        background-color: #0687cd;
+    }
+    .HeadingPanel{
+
+        position: relative;
+        height: 100vh;
+        width: 100vw;
+        background-color: #0687cd;
+    }
+    .Header3DModel {
+        
+        margin-top: 8vh;
+        margin-right: 3vw;
+        height: 70vh;
+        width: 35vw;
+        border: none;
+        float: right;
+        z-index: -6;
+    }
+    .hide-logo {
+            
+            margin-top: -8vh;
+            margin-right: 3.5vw;
+            position: absolute;
+            width: 150px;
+            height: 50px;
+            background-color: #0687cd;
+            z-index: 999;
+            right: 0;
+    }
+    .HeaderTitle {
+
+            font-size: 4.5rem;
+            font-family: Azonix, sans-serif;
+            position: relative;
+            opacity: 0;
+            animation: slideIn 2s ease-out forwards;
+            color: white;
+            text-align: left;
+        }
+
+        @keyframes slideIn {
+            0% {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        .HeadingTextWrapper{
+
+            display: flex;
+            width: 50vw;
+            height: 100%;
+            flex-direction: column;
+            justify-content: center;
+            margin-left: 7vw;
+
+        }
+        .HeaderText{
+
+            font-size: larger;
+            animation: slideIn 2s ease-out forwards;
+            color: white;
+            text-align: left;
+            margin-top: 3vh;
+        }
+        .WhiteCircularBlock{
+
+            height: 70rem;
+            width: 70rem;
+            position: absolute;
+            top: -35rem;
+            right: -35rem;
+            background-color: white;
+            border-radius: 500rem;
+            z-index: 0;
+        }
+
+        /* Navbar */
+
+        .navbar{
+
+            height: 8vh;
+            width:100vw;
+            display:flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            z-index: 10000;
+            transition: top 2s ease-in-out;
+            background-color: rgba(0, 0, 0, 0.3);
+            color: white;
+            
+        }
+        .navbarTitle{
+
+            width: 20vw;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: Azonix,'Roboto';
+            font-size: 2em;
+            
+        }
+        .NavList{
+
+            list-style-type: none;
+            display: flex;
+            flex-direction: row;
+            margin-right: 3vw;
+        }
+        .NavElement{
+
+            text-decoration: none;
+            font-size: larger;
+            width: 8vw;  
+            cursor: pointer;  
+            text-align: center; 
+            margin-right: 1vw;   
+            padding: 5px;
+            border-radius: 25px; 
+        }
+        .NavElement:hover{
+
+            box-shadow: 0 5px 5px;
+            margin-top: -2px;
+        }
+        /*cards*/
+
+        .CardsWrapper {
+
+            width: 100vw;
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .CardsWrapper1{
+
+            display: flex;
+            justify-content: center;
+            align-items:center;
+            justify-content: space-evenly;
+        }
+        .CardSubWrapper{
+
+            display: flex;
+            flex-wrap: nowrap;
+            flex-direction: column;
+            padding:2rem;
+            background-color:white ;
+        }
+        .Cards {
+    width: 65vw;
+    height: 35vh;
+    display: flex;
+    opacity: 0;
+    transition: transform 1s ease-out, opacity 1s ease-out;
+    justify-content: space-between;
+    transform: translateX(-100%);
+    background-color: transparent;
+}
+        .Cards:nth-child(1) {
+            
+            transform: translateX(100%); /* Start off-screen to the right */
+            margin-left: -35%;
+            margin-bottom: 10vh;
+            margin-top: 10vh;
+
+        }
+
+        .Cards:nth-child(2) {
+            
+            transform: translateX(-90%); /* Start off-screen to the right */
+            margin-right: -35%;
+        }
+        .Cards.show {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        .CardTitle {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .CardContent {
+            
+            font-size: 1rem;
+            color: #666;
+            line-height: 1.5;
+            text-overflow: clip;
+        }
+        .triangle-up {
+
+            width: 0;
+            height: 0;
+            border-left: 40vh solid transparent;
+            border-bottom: 35vh solid white;
+        }
+        .triangle-down {
+            width: 0;
+            height: 0;
+            border-right: 40vh solid transparent;
+            border-top: 35vh solid white;
+        }
+        .slider{
+            position: relative;
+            margin-top:20vh;
+            width: 100%;
+            height: 60vh;
+            overflow: hidden;
+        }
+        .item{
+
+            margin-top: 5vh;
+            margin-left: -5vw;
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 50vh;
+            height: 40vh;
+            text-align: justify;
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            transition: 0.5s;
+            left: calc(40%);
+            top: 0;
+        }
+        #next, #prev{
+            position: absolute;
+            top: 40%;
+            color: #fff;
+            background-color: transparent;
+            border: none;
+            font-size: xxx-large;
+            font-family: monospace;
+            font-weight: bold;
+            color: white;
+            left: 20vw;
+        }
+        #next{
+            left: unset;
+            right: 20vw;
+        }
+        .footer{
+
+            width:100vw;
+            height: 10vh;
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            
+        }
+</style>
+
+<body>
+    <div class="navbar">
+        <span class="navbarTitle">VulnScout</span>
+        <ul class="NavList">
+            <li class="NavElement" id="login">Login </li>
+            <li class="NavElement" id="contactUs">Contact Us</li>
+        </ul>
+    </div>
+
+    <div class="HeadingPanel">
+        <div class="WhiteCircularBlock"></div>
+        <div class="Header3DModel">
+            <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.25/build/spline-viewer.js"></script>
+            <spline-viewer url="https://prod.spline.design/qt6KKRwjkpSVhQ7a/scene.splinecode"></spline-viewer>
+            <div class="hide-logo"></div>
+        </div>
+        <div class="HeadingTextWrapper">
+            <div class="HeaderTitle">VulnScout</div>
+            <div class="HeaderText">VulnScout is a cutting-edge web-scraping tool designed to help critical infrastructure organizations stay informed about high-severity vulnerabilities affecting OEM(OT & IT) equipment in real time. By providing timely alerts and automated updates, VulnScout empowers users to take proactive measures in safeguarding their systems..</div>
+        </div>
+    </div>
+
+        <div class="CardsWrapper">
+            
+                <div class="Cards">
+                    <div class="CardSubWrapper">
+                    <div class="CardTitle">Automated Vulnerability Tracking</div>
+                    <div class="CardContent">The web-scraping tool provides critical infrastructure organizations with an automated solution for tracking high-severity vulnerabilities in OEM equipment. Users can input their preferred OEMs and products, enabling the tool to maintain a comprehensive database of security advisory web pages. By regularly crawling these sites, the tool identifies vulnerabilities as soon as they are published, delivering instant alerts tailored to user preferences.</div>
+                    </div>
+                    <div class="triangle-down"></div>
+                </div>
+                
+            
+                <div class="Cards">
+                    <div class="triangle-up"></div>
+                    <div class="CardSubWrapper">
+                    <div class="CardTitle">Real-time Insights</div>
+                    <div class="CardContent">The unique value of this solution lies in its real-time monitoring capabilities and personalized insights. Continuous tracking of vulnerabilities across various OEMs enables organizations to mitigate risks effectively. Advanced Natural Language Processing techniques extract critical information, resulting in tailored notifications.</div>
+                    </div>
+                </div>
+    
+        </div>
+        <div class="slider">
+            <div class="item">
+                <h1>Time-Saving Automation</h1>
+                The automated crawling and data extraction processes save valuable time for IT and security teams, allowing them to focus on strategic initiatives rather than manual monitoring.
+            </div>
+            <div class="item">
+                <h1>Consistent Updates</h1>
+                Users benefit from continuous monitoring without the need for manual intervention, ensuring they are always up to date with the latest information.
+            </div>
+            <div class="item">
+                <h1>Keyword Extraction Techniques:</h1>
+                Using advanced Natural Language Processing (NLP), VulnScout identifies and extracts relevant keywords from vulnerability reports, enhancing the quality of alerts sent to users.
+            </div>
+            <div class="item">
+                <h1>Personalized Email Generation</h1>
+                The tool employs Generative AI to craft tailored email notifications, ensuring that users receive insights that are directly relevant to their tracked products and OEMs.
+            </div>
+            <div class="item">
+                <h1>Risk Mitigation</h1>
+                By keeping organizations informed about critical vulnerabilities, VulnScout empowers them to implement timely mitigations, reducing the risk of security breaches and downtime.
+            </div>
+            <button id="next">></button>
+            <button id="prev"><</button>
+        </div>
+
+        <div class="footer">
+            <p style="font-family: Azonix;font-size: 2em;margin-bottom: -1vh;">VulnScout</p>
+            <p>all rights reserved</p>
+        </div>
+</body>
+<script>
+
+    let login=document.getElementById('login');
+    login.addEventListener("click",function(){
+        window.location.href = "login.html";
+    });
+document.addEventListener("DOMContentLoaded", function() {
+    const cards = document.querySelectorAll('.Cards');
+
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                console.log('Card in view:', entry.target); // Debugging line
+                entry.target.classList.add('show');
+                observer.unobserve(entry.target); // Stop observing once visible
+            }
+        });
+    }, { threshold: 0.1 }); // Try adjusting this value if necessary
+
+    cards.forEach(card => {
+        console.log('Observing card:', card); // Debugging line
+        observer.observe(card); // Observe each card
+    });
+});
+
+
+    let items = document.querySelectorAll('.slider .item');
+    let next = document.getElementById('next');
+    let prev = document.getElementById('prev');
+    
+    let active = 3;
+    function loadShow(){
+        let stt = 0;
+        items[active].style.transform = `none`;
+        items[active].style.zIndex = 1;
+        items[active].style.filter = 'none';
+        items[active].style.opacity = 1;
+        for(var i = active + 1; i < items.length; i++){
+            stt++;
+            items[i].style.transform = `translateX(${120*stt}px) scale(${1 - 0.2*stt}) perspective(16px) rotateY(-1deg)`;
+            items[i].style.zIndex = -stt;
+            items[i].style.filter = 'blur(5px)';
+            items[i].style.opacity = stt > 2 ? 0 : 0.6;
+        }
+        stt = 0;
+        for(var i = active - 1; i >= 0; i--){
+            stt++;
+            items[i].style.transform = `translateX(${-120*stt}px) scale(${1 - 0.2*stt}) perspective(16px) rotateY(1deg)`;
+            items[i].style.zIndex = -stt;
+            items[i].style.filter = 'blur(5px)';
+            items[i].style.opacity = stt > 2 ? 0 : 0.6;
+        }
+    }
+    loadShow();
+    next.onclick = function(){
+        active = active + 1 < items.length ? active + 1 : active;
+        loadShow();
+    }
+    prev.onclick = function(){
+        active = active - 1 >= 0 ? active - 1 : active;
+        loadShow();
+    }
+</script>
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-analytics.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyDBx8GSNLsS7gSJOTDBbWhimAYqHLVgcZk",
+      authDomain: "vulnscout-a847d.firebaseapp.com",
+      projectId: "vulnscout-a847d",
+      storageBucket: "vulnscout-a847d.appspot.com",
+      messagingSenderId: "775289450391",
+      appId: "1:775289450391:web:cfffa51366bef55175ded2",
+      measurementId: "G-GF32LDD0M9"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+  </script>
+</html>

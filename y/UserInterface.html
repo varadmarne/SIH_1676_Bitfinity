@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VulnScout</title>
+    <link rel="stylesheet" href="UIStyle.css">
+</head>
+<body>
+<div class="DataContainer">
+    <div class="HeaderCapsule">
+        <div class="ClientWrapper">
+            <img src="institute.png" alt="">
+            <p class="InstituteName">Institution</p>
+            
+        </div>
+        <div class="AppName">VulnScout
+            <a href="index.html"><img src="shutdown.png" alt="" srcset="" style="width: 40px;height: 40px;margin-left: 1vw;margin-top: 8px;"></a>
+        </div>
+    </div>
+    <div class="MainContentWrapper">
+    <div class="ManagerContainer">
+    <div class="container">
+
+        <!-- Email Table Section -->
+        <h2>Email List Manager</h2>
+        <div class="input-group">
+            <input type="email" id="emailInput" placeholder="Enter email" />
+            <button id="addEmailBtn"><p>+</p></button>
+        </div>
+        <div class="email-list-container list-container">
+            <div class="list-header">
+                <div class="serial-header">Number</div>
+                <div class="content-header">Email</div>
+                <div class="action-header">Action</div>
+            </div>
+            <div id="emailList"></div>
+        </div>
+    </div>
+    <div class="container">
+        <!-- OEM and Product Table Section -->
+        <h2>OEM Product Manager</h2>
+        <div class="input-group">
+            <input type="text" id="oemInput" placeholder="Enter OEM name" />
+            <input type="text" id="productInput" placeholder="Enter Product name" />
+            <button id="addEntryBtn"><p>+</p></button>
+        </div>
+        <div class="oem-list-container list-container">
+            <div class="list-header">
+                <div class="serial-header">Number</div>
+                <div class="content-header">OEM</div>
+                <div class="content-header">Product</div>
+                <div class="action-header">Action</div>
+            </div>
+            <div id="entryList"></div>
+        </div>
+    </div>
+</div>
+    <div class="UpdateContainer">
+        <h1 class="UpdateTitle">Vulnerability Updates</h1>
+        <div class="UpdatePanel"><div class="UpdatePanelIn"></div></div>
+    </div>
+</div>
+</div>
+
+
+    <script>
+
+        // Email List Management
+let emailCount = 0;
+const emailSet = new Set();
+document.getElementById('addEmailBtn').addEventListener('click', function() {
+    const emailInput = document.getElementById('emailInput');
+    const email = emailInput.value.trim();
+    ;
+
+    if (email !== '' && !emailSet.has(email)) {
+        addEmailToList(email);
+        const updatePanel=document.getElementsByClassName('UpdatePanelIn')[0];
+        const emailCapsule=document.createElement('div');
+        emailCapsule.classList.add('EmailContainer');
+        //emailCapsule.style.color='red';
+        emailCapsule.innerText=email+" added to the email alert list.";
+        updatePanel.appendChild(emailCapsule);
+
+        emailInput.value = ''; // Clear input
+    } else if (emailSet.has(email)) {
+        alert('This email is already added to the list!');
+    }
+});
+
+function addEmailToList(email) {
+    emailCount++;
+    emailSet.add(email);
+
+    const emailList = document.getElementById('emailList');
+
+    const emailItem = document.createElement('div');
+    emailItem.classList.add('list-item');
+
+    const serialNumber = document.createElement('div');
+    serialNumber.classList.add('serial-number');
+    serialNumber.textContent = emailCount;
+
+    const emailText = document.createElement('div');
+    emailText.classList.add('content-text');
+    emailText.textContent = email;
+
+    const removeDiv = document.createElement('div');
+    removeDiv.classList.add('remove-btn');
+
+    const removeBtn = document.createElement('button');
+    const btnText=document.createElement('p');
+    btnText.textContent = '-';
+    removeBtn.addEventListener('click', function() {
+        emailList.removeChild(emailItem);
+        emailSet.delete(email);
+        updateEmailSerialNumbers();
+        emailCount--;
+    });
+
+    removeDiv.appendChild(removeBtn);
+    removeBtn.appendChild(btnText);
+    emailItem.appendChild(serialNumber);
+    emailItem.appendChild(emailText);
+    emailItem.appendChild(removeDiv);
+    emailList.appendChild(emailItem);
+}
+
+function updateEmailSerialNumbers() {
+    const emailItems = document.querySelectorAll('#emailList.list-item');
+    emailItems.forEach((item, index) => {
+        item.querySelector('.serial-number').textContent = index + 1;
+    });
+}
+
+function addEmailUpdate(){
+
+
+
+}
+// OEM and Product List Management
+let entryCount = 0;
+const entrySet = new Set();
+
+document.getElementById('addEntryBtn').addEventListener('click', function() {
+    const oemInput = document.getElementById('oemInput');
+    const productInput = document.getElementById('productInput');
+    const oem = oemInput.value.trim();
+    const product = productInput.value.trim();
+
+    const entryKey = `${oem}-${product}`;
+
+    if (oem !== '' && product !== '' && !entrySet.has(entryKey)) {
+        addEntryToList(oem, product, entryKey);
+        const updatePanel=document.getElementsByClassName('UpdatePanelIn')[0];
+        const oemUpdate=document.createElement('div');
+        const oemUpdateContent=document.createElement('p');
+        oemUpdate.classList.add('OemUpdate');
+        oemUpdate.appendChild(oemUpdateContent);
+        const text = "New Oem added:\n"+"OEM: "+ oem + "\n" + "Product: " +product ;
+        oemUpdateContent.innerText=text; 
+        oemInput.value = '';
+        productInput.value = '';
+        updatePanel.appendChild(oemUpdate);
+    } else if (entrySet.has(entryKey)) {
+        alert('This OEM and Product combination is already added to the list!');
+    }
+});
+
+function addEntryToList(oem, product, entryKey) {
+    entryCount++;
+    entrySet.add(entryKey);
+
+    const entryList = document.getElementById('entryList');
+
+    const entryItem = document.createElement('div');
+    entryItem.classList.add('list-item');
+
+    const serialNumber = document.createElement('div');
+    serialNumber.classList.add('serial-number');
+    serialNumber.textContent = entryCount;
+
+    const oemText = document.createElement('div');
+    oemText.classList.add('content-text');
+    oemText.textContent = oem;
+
+    const productText = document.createElement('div');
+    productText.classList.add('content-text');
+    productText.textContent = product;
+
+    const removeDiv = document.createElement('div');
+    removeDiv.classList.add('remove-btn');
+
+    const removeBtn = document.createElement('button');
+    const btnText=document.createElement('p');
+    btnText.textContent = '-';
+
+    removeBtn.addEventListener('click', function() {
+        entryList.removeChild(entryItem);
+        entrySet.delete(entryKey);
+        updateEntrySerialNumbers();
+        entryCount--;
+    });
+
+    removeDiv.appendChild(removeBtn);
+    removeBtn.appendChild(btnText);
+    entryItem.appendChild(serialNumber);
+    entryItem.appendChild(oemText);
+    entryItem.appendChild(productText);
+    entryItem.appendChild(removeDiv);
+    entryList.appendChild(entryItem);
+}
+
+function updateEntrySerialNumbers() {
+    const entryItems = document.querySelectorAll('#entrylist.list-item');
+    entryItems.forEach((item, index) => {
+        item.querySelector('.serial-number').textContent = index + 1;
+    });
+}
+
+
+    </script>
+</body>
+</html>
+

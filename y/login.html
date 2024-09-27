@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VulnScout</title>
+    <script src="login.js" type="module" defer></script>
+</head>
+<style>
+
+    @font-face {
+        
+        font-family: Azonix;
+        src: url(Azonix-1VB0.otf);
+    }
+    @keyframes slideIn {
+
+            0% {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity:1;
+            }
+        }
+        @keyframes slideInBottom {
+
+            0% {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity:1;
+            }
+            }
+
+    @keyframes appear{
+
+        0%{
+            opacity: 0;
+        }
+        100%{
+            opacity:1;
+        }
+    }
+    body{
+
+        margin: 0;
+        padding: 0;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        background-color: #0687cd;
+        font-family: 'Roboto','Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    }
+    .LoginContainer{
+
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+    }
+    .Circle{
+
+        display: block;
+        position: absolute;
+        height: 150vw;
+        width: 150vw;
+        border-radius: 150vw;
+        background-color: white;
+        margin-left: -25vw;
+        top: -120vw;
+        animation: slideIn 2s;
+        transition-timing-function: ease-in;
+        z-index: -1;
+    }
+    .LoginBox{
+
+        height: 50vh;
+        width: 25vw;
+        background-color: #006caf;
+        border-radius: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        color: white;
+    }
+    .ContentWrapper{
+
+        display: flex;
+        margin-top: 7vh;
+        width: 20vw;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        color: white;
+    }
+    .ContentWrapper>p{
+
+        text-align: center;
+        font-size: large;
+    }
+    .ContentWrapper>h2{
+
+        margin: 0;
+        font-size: 30px;
+        margin-top:-2vw;
+    }
+    .ContentWrapper>input{
+
+        font-size: large;
+        width: 17vw;
+        border-radius: 10px;
+        border: none;
+        padding: 1vw;
+        margin-top: 2vh;
+    }
+    #submit{
+
+        width:10vw;
+        padding:0.5em;
+        margin-bottom: 5vh;
+    }
+    .ContentWrapper>a{
+
+        color: white;
+        text-decoration: none;
+    }
+    .footer{
+
+        width:100vw;
+        height: 10vh;
+        margin-top: -10vh;
+        background-color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        animation:slideInBottom 1s;
+
+    }
+</style>
+<body>
+    <div class="Circle"></div>
+    <div class="LoginContainer">
+        <div class="LoginBox">
+            <div class="ContentWrapper">
+                <h2>Welcome!</h2>
+                <p>Enter the Username & Password provided to log into the dashboard.</p>
+                <input type="text" placeholder="Email" id="email">  
+                <input type="password" placeholder="Password"  id="password">
+                <input type="submit" value="Login" id="submit">
+                <a href="www.google.com">Forgot username or password?</a>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <p style="font-family: Azonix;font-size: 2em;margin-bottom: -1vh;">VulnScout</p>
+        <p>all rights reserved</p>
+    </div>
+</body>
+</html>
